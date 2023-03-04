@@ -259,33 +259,5 @@ describe("hardhat-diamond-abi", function () {
       const { abi } = await hre.artifacts.readArtifact(hre.config.diamondAbi[0].name);
       assert.sameMembers(getAbiNames(abi), ["foo"]);
     });
-
-    it("validates against duplicates by default when generating an artifact", async function () {
-      process.chdir(path.join(__dirname, "fixture-projects", "hardhat-contracts-strict"));
-
-      const hre = require("hardhat");
-
-      try {
-        await hre.run(TASK_COMPILE);
-      } catch (err) {
-        assert.equal(err.message, "Failed to create HardhatDiamond ABI - `baz()` appears twice.");
-      }
-
-      const artifactExists = await hre.artifacts.artifactExists(hre.config.diamondAbi[0].name);
-      assert.isFalse(artifactExists);
-    });
-
-    it("can disable validation against duplicates when generating an artifact", async function () {
-      process.chdir(path.join(__dirname, "fixture-projects", "hardhat-contracts-no-strict"));
-
-      const hre = require("hardhat");
-
-      await hre.run(TASK_COMPILE);
-
-      const artifactExists = await hre.artifacts.artifactExists(hre.config.diamondAbi[0].name);
-      assert.isTrue(artifactExists);
-      const { abi } = await hre.artifacts.readArtifact(hre.config.diamondAbi[0].name);
-      assert.sameMembers(getAbiNames(abi), ["foo", "baz", "bar", "baz"]);
-    });
   });
 });

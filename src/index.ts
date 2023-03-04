@@ -188,7 +188,7 @@ export async function generateDiamondAbi(
     const config = configArray[i];
 
     const contracts = await hre.artifacts.getAllFullyQualifiedNames();
-    const mergedAbis = [];
+    const mergedAbis: any[] = [];
 
     for (const contractName of contracts) {
       // We can't accept a RegExp until https://github.com/nomiclabs/hardhat/issues/2181
@@ -215,6 +215,16 @@ export async function generateDiamondAbi(
 
           if (typeof config.filter === "function") {
             return config.filter(abiElement, index, abi, contractName);
+          }
+
+          // Make sure we don't include the same function twice.
+          // This can happen if a contract inherits from another contract that has the same function.
+          const sighash = Fragment.fromObject(abiElement).format(FormatTypes.sighash);
+          if (mergedAbis.some((abiElement) => {
+            const sighash2 = Fragment.fromObject(abiElement).format(FormatTypes.sighash);
+            return sighash === sighash2;
+          })) {
+            return false;
           }
 
           return true;
