@@ -1,9 +1,9 @@
 {
-  "name": "hardhat-diamond-abi",
-  "version": "2.0.0",
-  "description": "Hardhat plugin to combine multiple ABIs into a Diamond ABI artifact.",
+  "name": "@kingdomstudios/hardhat-diamond-abi",
+  "version": "2.2.0",
+  "description": "Hardhat plugin to combine multiple ABIs into a Diamond ABI artifact. Added support for multiple diamonds.",
   "author": "Blaine Bublitz <blaine.bublitz@gmail.com> (https://github.com/phated)",
-  "repository": "projectsophon/hardhat-diamond-abi",
+  "repository": "friskyfoxdk/hardhat-diamond-abi",
   "license": "GPL-3.0",
   "engines": {
     "node": ">=14"
